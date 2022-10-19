@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Employee webapp</title>
+    </head>
+    <body>
+        <h1>Liste des employés</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Prénom</th>
+                    <th>Nom</th>
+                    <tbody>
+                        <tr th:if="${employees.empty}">
+                            <td colspan="3">
+                                Auncun employé en base de données
+                            </td>
+                        </tr>
+                        <tr th:each="employee: ${employees}">
+                            <td>
+                                <span th:text="${employee.firstName}"
+                                    >Prénom</span
+                                >
+                            </td>
+                            <td>
+                                <span th:text="${employee.lastName}">Nom</span>
+                            </td>
+                            <td>
+                                <a
+                                    th:href="@{/deleteEmployee/{id}(id=${employee.id})}"
+                                    >Supprimer</a
+                                >
+                            </td>
+                        </tr>
+                    </tbody>
+                </tr>
+            </thead>
+        </table>
+
+        <form
+            method="post"
+            th:action="@{/saveEmployee}"
+            th:object="${employee}"
+        >
+            <input
+                type="text"
+                th:field="*{firstName}"
+                placeholder="Entrez un prénom"
+            />
+            <input
+                type="text"
+                th:field="*{lastName}"
+                placeholder="Entrez un nom"
+            />
+            <input
+                type="text"
+                th:field="*{mail}"
+                placeholder="Entrez un mail"
+            />
+            <input
+                type="password"
+                th:field="*{password}"
+                placeholder="Entrez un mdp"
+            />
+            <button type="submit">Créer</button>
+        </form>
+    </body>
+</html>
